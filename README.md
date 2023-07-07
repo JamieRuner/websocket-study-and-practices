@@ -79,6 +79,42 @@ setInterval(() => {
 - worker通过cluster.fork()生成，不用new Worker()的构造器生成
 - isPrimary和isMaster都能区分是否是主线程，但是得官方文档用的是isPrimary
 
+#### websocket的应用场景
+
+- 即时聊天通信
+- 多玩家游戏
+- 在线协同编程/编辑
+- 实时数据流拉取和推送
+- 体育/游戏实况
+- 实时地图位置
+- 即时Web应用程序：即时Web应用程序使用一个Web套接字在客户端显示数据，这些数据由后端服务器连续发送。在WebSocket中，数据被连续推送/传输到已经打开的同一连接中，这就是为什么WebSocket更快并提高了应用程序性能的原因。 例如在交易网站或比特币交易中，这是最不稳定的事情，它用于显示价格波动，数据被后端服务器使用Web套接字通道连续推送到客户端
+- 游戏应用程序：在游戏应用程序中，你可能会注意到，服务器会持续接收数据，而不会刷新用户界面。屏幕上的用户界面会自动刷新，而且不需要建立新的连接，因此在WebSocket游戏应用程序中非常有帮助
+- 聊天应用程序：聊天应用程序仅使用WebSocket建立一次连接，便能在订阅户之间交换，发布和广播消息。它重复使用相同的WebSocket连接，用于发送和接收消息以及一对一的消息传输
+
+#### websocket常见的问题
+
+- 断线重连，解决办法是客户端定时向服务端发送心跳
+- 如何判断是否在线或则已经离线，将用户请求时间的间隔大于指定时间时，判断为离线，否者为在线
+- nginx代理的websocket转发，无消息连接时会出现超时断开的问题，解决方案有两种，一种是修改nginx配置，另一种是发送定时心跳包
+
+- 什么是 WebSocket？它与 HTTP 有哪些区别和优势？
+- WebSocket 的握手过程是怎样的？
+- WebSocket 支持哪些数据类型？
+- 如何实现 WebSocket 的心跳机制？
+- 如何处理客户端发来的消息？
+- 如何广播消息给所有客户端？
+- 如何处理客户端的断开连接？
+- WebSocket 的安全性如何保障？
+（https://wiki.wgpsec.org/knowledge/web/websocket-sec.html、https://www.51cto.com/article/758696.html）
+  - 将通过 WebSocket 接收的数据在两个方向都视为不可信的。在服务器端和客户端安全地处理数据，以防止基于输入的漏洞，如 SQL 注入和跨网站脚本
+  - 使用CSRF Token、请求头令牌等方案保护WebSocket握手流程，防止WebSocket握手流程被CSRF攻击所利用
+  - 使用wss://协议，（基于TLS的Websockets）
+  - 硬编码WebSockets的URL接口，以保证用户的输入无法篡改此URL
+- 使用 WebSocket 时需要注意哪些问题？
+- 与其他技术如 AJAX、Comet 比较，WebSocket 有哪些优势和不足之处？
+
+
+
 #### 起多线程去连同一个websocket服务，会报错，这个之后再看看
 
 - Subprotocols相关的内容，后面了解下
